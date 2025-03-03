@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <title>frontblocks</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="logo.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #e5e5e5;
+            min-height: 100vh;
+            padding: 2rem;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            background: linear-gradient(45deg, #4facfe 0%, #00f2fe 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 700;
+        }
+        
+        h3 {
+          text-align: center;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .input-field {
+            flex: 1;
+            padding: 1rem 1.5rem;
+            font-size: 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            color: #fff;
+            transition: all 0.3s ease;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: #4facfe;
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .input-field::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .button {
+            padding: 1rem 2rem;
+            background: linear-gradient(45deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(79, 172, 254, 0.4);
+        }
+
+        .project-list {
+            display: grid;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .project-item {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1.25rem;
+            border-radius: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+        }
+
+        .project-item:hover {
+            transform: translateX(5px);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .project-info {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        .project-name {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .project-date {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .delete-btn {
+            background: rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .delete-btn:hover {
+            background: rgba(239, 68, 68, 0.3);
+            transform: scale(1.05);
+        }
+
+        @media (max-width: 640px) {
+            body {
+                padding: 1rem;
+            }
+
+            .container {
+                padding: 1.5rem;
+            }
+
+            .input-group {
+                flex-direction: column;
+            }
+
+            .button {
+                width: 100%;
+            }
+        }
+        
+        p {
+          text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>frontblocks</h1>
+        <p>Aprenda a lógica por trás do FrontEnd</p>
+        <br>
+        
+        <div class="input-group">
+            <input type="text" id="projectName" class="input-field" placeholder="Digite o nome do projeto..." />
+            <button class="button" onclick="saveProject()">Adicionar Projeto</button>
+        </div>
+
+        <div class="project-list" id="projectList"></div>
+    </div>
+    <br>
+<h3>by: danielxyzzz & ravy novais sales</h3>
+    <script>
+        const dbName = "ProjectDB";
+        let db;
+
+        const request = indexedDB.open(dbName, 1);
+
+        request.onerror = function(event) {
+            console.error("Erro ao abrir o banco de dados", event);
+        };
+
+        request.onupgradeneeded = function(event) {
+            db = event.target.result;
+            if (!db.objectStoreNames.contains("projects")) {
+                db.createObjectStore("projects", { keyPath: "id", autoIncrement: true });
+            }
+        };
+
+        request.onsuccess = function(event) {
+            db = event.target.result;
+            loadProjects();
+        };
+
+        function formatDate(date) {
+            return new Intl.DateTimeFormat('pt-BR', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            }).format(date);
+        }
+
+        function saveProject() {
+            const projectName = document.getElementById("projectName").value.trim();
+            if (projectName) {
+                const transaction = db.transaction(["projects"], "readwrite");
+                const objectStore = transaction.objectStore("projects");
+
+                const project = { name: projectName, timestamp: new Date() };
+
+                const request = objectStore.add(project);
+                request.onsuccess = function() {
+                    document.getElementById("projectName").value = "";
+                    loadProjects();
+                };
+                request.onerror = function() {
+                    console.error("Erro ao salvar o projeto");
+                };
+            }
+        }
+
+        function loadProjects() {
+            const projectList = document.getElementById("projectList");
+            projectList.innerHTML = "";
+
+            const transaction = db.transaction(["projects"], "readonly");
+            const objectStore = transaction.objectStore("projects");
+
+            const request = objectStore.getAll();
+
+            request.onsuccess = function() {
+                const projects = request.result;
+                if (projects.length === 0) {
+                    projectList.innerHTML = `
+                        <div style="text-align: center; color: rgba(255,255,255,0.5); padding: 2rem;">
+                            Nenhum projeto encontrado.
+                        </div>
+                    `;
+                } else {
+                    projects
+                        .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp))
+                        .forEach(project => {
+                            const projectItem = document.createElement("div");
+                            projectItem.className = "project-item";
+                            projectItem.innerHTML = `
+                                <div class="project-info">
+                                    <span class="project-name">${project.name}</span>
+                                    <span class="project-date">${formatDate(new Date(project.timestamp))}</span>
+                                </div>
+                                <button class="delete-btn" onclick="deleteProject(event, ${project.id})">Excluir</button>
+                            `;
+                            projectItem.onclick = function() {
+                                window.location.href = `executar.html?id=${project.id}`;
+                            };
+                            projectList.appendChild(projectItem);
+                        });
+                }
+            };
+
+            request.onerror = function() {
+                console.error("Erro ao carregar os projetos");
+            };
+        }
+
+        function deleteProject(event, id) {
+            event.stopPropagation(); 
+
+            if (confirm('Tem certeza que deseja excluir este projeto?')) {
+                const transaction = db.transaction(["projects"], "readwrite");
+                const objectStore = transaction.objectStore("projects");
+
+                const request = objectStore.delete(id);
+                request.onsuccess = function() {
+                    loadProjects();
+                };
+                request.onerror = function() {
+                    console.error("Erro ao excluir o projeto");
+                };
+            }
+        }
+
+        
+        document.getElementById("projectName").addEventListener("keypress", function(e) {
+            if (e.key === "Enter") {
+                saveProject();
+            }
+        });
+    </script>
+</body>
+</html>
+
+

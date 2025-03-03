@@ -1,0 +1,621 @@
+<!DOCTYPE html><html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <title>frontblocks</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="logo.png">
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Open Sans', sans-serif;
+    padding: 20px;
+    touch-action: none;
+    background-color: #202531;
+    color: #ffffff;
+}
+
+.workspace {
+    min-height: 400px;
+    max-height: 600px; 
+    border: 2px dashed #414866;
+    padding: 20px;
+    position: relative;
+    margin-top: 20px;
+    overflow-y: auto; 
+    background-color: #272c3f;
+    border-radius: 4px;
+}
+
+.block {
+    background: #2a2f44;
+    border: 1px solid #414866;
+    padding: 10px;
+    margin: 5px;
+    cursor: grab;
+    position: relative;
+    width: 300px;
+    border-radius: 3px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    touch-action: none;
+    user-select: none;
+    margin-bottom: 10px;
+    color: #ffffff;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.block:active {
+    cursor: grabbing;
+    transform: scale(1.1);
+    opacity: 0.8;
+}
+
+.button {
+    background: #414866;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-right: 10px;
+    transition: background-color 0.2s;
+}
+
+.button:hover {
+    background: #4f5982;
+}
+
+.execute-button {
+    background: #414866;
+}
+
+.execute-button:hover {
+    background: #4f5982;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(32, 37, 49, 0.9);
+    z-index: 1000;
+}
+
+.modal-content {
+    background: #272c3f;
+    margin: 15% auto;
+    padding: 20px;
+    width: 80%;
+    max-width: 500px;
+    border-radius: 4px;
+    border: 1px solid #414866;
+    color: #ffffff;
+}
+
+.block-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.block-option {
+    padding: 10px;
+    border: 1px solid #414866;
+    border-radius: 3px;
+    cursor: pointer;
+    background: #2a2f44;
+    color: #ffffff;
+}
+
+.block-option:hover {
+    background: #313852;
+}
+
+.input-field {
+    margin: 5px 0;
+    padding: 5px;
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid #414866;
+    border-radius: 0;
+    pointer-events: auto;
+    cursor: text;
+    z-index: 2;
+    color: #000000;
+    background-color: transparent;
+}
+
+.input-field:focus {
+    border-color: #4f5982;
+    outline: none;
+}
+
+.close {
+    float: right;
+    cursor: pointer;
+    font-size: 20px;
+    color: #ffffff;
+}
+
+.close:hover {
+    color: #4f5982;
+}
+
+.blocks-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.button-container {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #202531;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #414866;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #4f5982;
+}   
+</style>
+
+</head>
+<body>
+    <div class="button-container">
+        <button class="button" onclick="openModal()">+ Adicionar Bloco</button>
+        <button class="button execute-button" onclick="saveAndExecuteCode()">Executar Código</button>
+    </div><div class="workspace" id="workspace">
+    <div class="blocks-container" id="blocksContainer"></div>
+</div>
+
+<div class="modal" id="blockModal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <h2>Selecione um Bloco</h2>
+        <div class="block-list" id="blockList"></div>
+    </div>
+</div>
+
+
+<script>
+let blocks = [];
+let blockDefinitions = [];
+
+let db;
+const dbName = "BlockEngineDB";
+const request = indexedDB.open(dbName, 1);
+
+request.onerror = (event) => {
+    console.error("Erro ao abrir o banco de dados");
+};
+
+request.onupgradeneeded = (event) => {
+    db = event.target.result;
+    if (!db.objectStoreNames.contains("blocos")) {
+        db.createObjectStore("blocos", { keyPath: "id", autoIncrement: true });
+    }
+};
+
+function loadBlockDefinitions() {
+    fetch('blocos.json')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Não foi possível carregar as definições de blocos');
+            }
+            return response.json();
+        })
+        .then(data => {
+            blockDefinitions = data;
+            
+        })
+        .catch(error => {
+            console.error('Erro ao carregar as definições de blocos:', error);
+        });
+}
+
+function getUrlParams() {
+    const params = new URLSearchParams(window.location.search);
+    return {
+        id: params.get('id')
+    };
+}
+
+function loadProject() {
+    const { id } = getUrlParams();
+    if (!id) return;
+
+    const transaction = db.transaction(["blocos"], "readonly");
+    const objectStore = transaction.objectStore("blocos");
+    const request = objectStore.get(parseInt(id));
+
+    request.onsuccess = (event) => {
+        const project = event.target.result;
+        if (project) {
+            const blocksContainer = document.getElementById('blocksContainer');
+            blocksContainer.innerHTML = '';
+
+            project.blocks.forEach(blockData => {
+                const block = createBlock(blockData.definition);
+                
+                blockData.inputs.forEach(input => {
+                    const inputElement = block.querySelector(`[data-variable="${input.variable}"]`);
+                    if (inputElement) {
+                        inputElement.value = input.value;
+                    }
+                });
+
+                blocksContainer.appendChild(block);
+            });
+        }
+    };
+
+    request.onerror = () => {
+        console.error("Erro ao carregar o projeto");
+    };
+}
+
+request.onsuccess = (event) => {
+    db = event.target.result;
+    loadBlockDefinitions(); 
+    loadProject();
+};
+
+function saveAndExecuteCode() {
+    const code = generateCode();
+    const transaction = db.transaction(["blocos"], "readwrite");
+    const objectStore = transaction.objectStore("blocos");
+    
+    const blocksData = Array.from(document.getElementById('blocksContainer').children).map(blockElement => {
+        const block = blocks.find(b => b.element === blockElement);
+        const inputs = Array.from(blockElement.querySelectorAll('input')).map(input => ({
+            variable: input.dataset.variable,
+            value: input.value
+        }));
+        
+        return {
+            definition: block.definition,
+            inputs: inputs
+        };
+    });
+
+    const data = {
+        code: code,
+        blocks: blocksData,
+        timestamp: new Date().toISOString()
+    };
+
+    const { id } = getUrlParams();
+    
+    if (id) {
+        data.id = parseInt(id);
+        objectStore.put(data).onsuccess = () => {
+            alert("Projeto atualizado com sucesso!");
+            window.location.href = "run.html?id=" + id;
+        };
+    } else {
+        objectStore.add(data).onsuccess = (event) => {
+            alert("Projeto salvo com sucesso!");
+            const newId = event.target.result;
+            window.location.href = "run.html?id=" + newId;
+        };
+    }
+}
+
+function createBlock(definition) {
+    const block = document.createElement('div');
+    block.className = 'block';
+    block.style.backgroundColor = definition.cor;
+   
+    const headerContainer = document.createElement('div');
+    headerContainer.style.display = 'flex';
+    headerContainer.style.justifyContent = 'space-between';
+    headerContainer.style.alignItems = 'center';
+    headerContainer.style.marginBottom = '5px';
+    block.appendChild(headerContainer);
+    
+    const titleEl = document.createElement('div');
+    titleEl.textContent = definition.nome;
+    titleEl.style.fontWeight = 'bold';
+    headerContainer.appendChild(titleEl);
+   
+    const deleteButton = document.createElement('button');
+    deleteButton.textContent = 'X';
+    deleteButton.style.background = 'none';
+    deleteButton.style.border = 'none';
+    deleteButton.style.color = '#ffffff';
+    deleteButton.style.cursor = 'pointer';
+    deleteButton.style.fontSize = '14px';
+    deleteButton.style.padding = '0 5px';
+    deleteButton.style.borderRadius = '3px';
+    deleteButton.title = 'Apagar bloco';
+    
+    deleteButton.addEventListener('mouseover', () => {
+        deleteButton.style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
+    });
+    
+    deleteButton.addEventListener('mouseout', () => {
+        deleteButton.style.backgroundColor = 'transparent';
+    });
+    
+    deleteButton.addEventListener('mousedown', (e) => {
+        e.stopPropagation(); 
+    });
+    
+    deleteButton.addEventListener('click', () => {
+        deleteBlock(block);
+    });
+    
+    headerContainer.appendChild(deleteButton);
+   
+    for (const [label, variable] of Object.entries(definition.entradas)) {
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.placeholder = label;
+        input.className = 'input-field';
+        input.dataset.variable = variable;
+        input.addEventListener('mousedown', (e) => {
+            e.stopPropagation();
+        });
+        input.addEventListener('touchstart', (e) => {
+            e.stopPropagation();
+        });
+        block.appendChild(input);
+    }
+
+    makeDraggable(block);
+    
+    blocks.push({
+        element: block,
+        definition: definition
+    });
+
+    return block;
+}
+
+function deleteBlock(blockElement) {
+    const index = blocks.findIndex(b => b.element === blockElement);
+    if (index !== -1) {
+        blocks.splice(index, 1);
+    }
+       
+    blockElement.style.transition = 'all 0.3s ease';
+    blockElement.style.opacity = '0';
+    blockElement.style.transform = 'scale(0.8)';
+    
+    setTimeout(() => {
+        blockElement.remove();
+    }, 300);
+}
+
+function makeDraggable(element) {
+    let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+    let isDragging = false;
+    let originalPosition = null;
+    let placeholder = null;
+    const container = document.getElementById('blocksContainer');
+
+    element.onmousedown = dragMouseDown;
+    element.ontouchstart = dragTouchStart;
+
+    function createPlaceholder() {
+        placeholder = document.createElement('div');
+        placeholder.className = 'block';
+        placeholder.style.opacity = '0.3';
+        placeholder.style.border = '2px dashed #414866';
+        placeholder.style.backgroundColor = 'transparent';
+        placeholder.style.height = `${element.offsetHeight}px`;
+        return placeholder;
+    }
+
+    function dragMouseDown(e) {
+        if (e.target.className === 'input-field' || e.target.tagName === 'BUTTON') return;
+        e.preventDefault();
+              
+        originalPosition = {
+            x: element.offsetLeft,
+            y: element.offsetTop
+        };
+        
+        pos3 = e.clientX;
+        pos4 = e.clientY;
+        isDragging = true;
+               
+        placeholder = createPlaceholder();
+        element.parentNode.insertBefore(placeholder, element);
+               
+        element.style.position = 'fixed';
+        element.style.zIndex = '1000';
+        element.style.width = `${element.offsetWidth}px`;
+        element.style.transform = 'scale(1.05)';
+        element.style.transition = 'transform 0.2s ease';
+        
+        document.onmouseup = closeDragElement;
+        document.onmousemove = elementDrag;
+    }
+
+    function dragTouchStart(e) {
+    if (e.target.className === 'input-field' || e.target.tagName === 'BUTTON') return;
+    
+    originalPosition = {  
+        x: element.offsetLeft,  
+        y: element.offsetTop  
+    };  
+      
+    pos3 = e.touches[0].clientX;  
+    pos4 = e.touches[0].clientY;  
+    isDragging = true;  
+      
+    placeholder = createPlaceholder();  
+    element.parentNode.insertBefore(placeholder, element);  
+      
+    element.style.position = 'fixed';  
+    element.style.zIndex = '1000';  
+    element.style.width = `${element.offsetWidth}px`;  
+    element.style.transform = 'scale(1.05)';  
+    element.style.transition = 'transform 0.2s ease';  
+      
+    document.ontouchend = closeDragElement;  
+    document.ontouchmove = elementTouchDrag;  
+}
+
+    function elementDrag(e) {
+        if (!isDragging) return;
+        e.preventDefault();
+               
+        pos1 = pos3 - e.clientX;
+        pos2 = pos4 - e.clientY;
+        pos3 = e.clientX;
+        pos4 = e.clientY;
+               
+        element.style.top = `${e.clientY - (element.offsetHeight / 2)}px`;
+        element.style.left = `${e.clientX - (element.offsetWidth / 2)}px`;
+        
+        updatePlaceholderPosition(e.clientY);
+    }
+
+    function elementTouchDrag(e) {
+        if (!isDragging) return;
+        e.preventDefault();
+        
+        pos1 = pos3 - e.touches[0].clientX;
+        pos2 = pos4 - e.touches[0].clientY;
+        pos3 = e.touches[0].clientX;
+        pos4 = e.touches[0].clientY;
+        
+        element.style.top = `${e.touches[0].clientY - (element.offsetHeight / 2)}px`;
+        element.style.left = `${e.touches[0].clientX - (element.offsetWidth / 2)}px`;
+        
+        updatePlaceholderPosition(e.touches[0].clientY);
+    }
+
+    function updatePlaceholderPosition(clientY) {
+        const blocks = Array.from(container.children);
+        let insertIndex = blocks.findIndex(block => {
+            if (block === element || block === placeholder) return false;
+            const rect = block.getBoundingClientRect();
+            return clientY < (rect.top + rect.bottom) / 2;
+        });
+
+        if (insertIndex === -1) insertIndex = blocks.length;
+        
+        placeholder.remove();
+        if (insertIndex >= blocks.length) {
+            container.appendChild(placeholder);
+        } else {
+            container.insertBefore(placeholder, blocks[insertIndex]);
+        }
+    }
+
+    function closeDragElement() {
+        if (!isDragging) return;
+        isDragging = false;
+                
+        element.style.position = '';
+        element.style.top = '';
+        element.style.left = '';
+        element.style.zIndex = '1';
+        element.style.transform = 'scale(1)';
+               
+        if (placeholder && placeholder.parentNode) {
+            placeholder.parentNode.insertBefore(element, placeholder);
+            placeholder.remove();
+        }
+                
+        element.style.transition = 'all 0.2s ease';
+        setTimeout(() => {
+            element.style.transition = '';
+        }, 200);
+        
+        document.onmouseup = null;
+        document.onmousemove = null;
+        document.ontouchend = null;
+        document.ontouchmove = null;
+    }
+}
+
+function openModal() {
+    const modal = document.getElementById('blockModal');
+    const blockList = document.getElementById('blockList');
+    blockList.innerHTML = '';
+
+    blockDefinitions.forEach(def => {
+        const option = document.createElement('div');
+        option.className = 'block-option';
+        option.style.backgroundColor = def.cor;
+        option.textContent = def.nome;
+        option.onclick = () => {
+            const blocksContainer = document.getElementById('blocksContainer');
+            const block = createBlock(def);
+            blocksContainer.appendChild(block);
+            closeModal();
+        };
+        blockList.appendChild(option);
+    });
+
+    modal.style.display = 'block';
+}
+
+function closeModal() {
+    document.getElementById('blockModal').style.display = 'none';
+}
+
+function generateCode() {
+    let code = '';
+    const blocksContainer = document.getElementById('blocksContainer');
+    Array.from(blocksContainer.children).forEach(blockElement => {
+        const block = blocks.find(b => b.element === blockElement);
+        if (block) {
+            let blockCode = block.definition.codigo;
+            const inputs = blockElement.querySelectorAll('input');
+            inputs.forEach(input => {
+                blockCode = blockCode.replace(
+                    `$vri{${input.dataset.variable}}`,
+                    input.value || input.dataset.variable
+                );
+            });
+            code += blockCode + '\n';
+        }
+    });
+    return code;
+}
+
+window.onclick = function(event) {
+    const modal = document.getElementById('blockModal');
+    if (event.target == modal) {
+        closeModal();
+    }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    loadBlockDefinitions();
+});
+
+
+</script>
+
+</body>
+</html>
+

@@ -6,6 +6,12 @@
     "codigo": "function $vri{nomeFuncao}() {"
   },
   {
+    "nome": "Executar código JavaScript",
+    "cor": "#4CAF50",
+    "entradas": { "Código": "nco" },
+    "codigo": "window.eval($vri{nco})"
+  },
+  {
     "nome": "Fim Função",
     "cor": "#f44336",
     "entradas": {},
@@ -173,8 +179,8 @@
   {
     "nome": "Criar Imagem",
     "cor": "#FF9800",
-    "entradas": { "ID da Imagem (ex: imagem1)": "", "Fonte da Imagem (ex: http://example.com/imagem.jpg)": "" },
-    "codigo": "let img = document.createElement('img'); img.id = '$vri{idImagem}'; img.src = '$vri{fonteImagem}'; document.body.appendChild(img);"
+    "entradas": { "ID da Imagem (ex: imagem1)": "idImagem", "Fonte da Imagem (ex: http://example.com/imagem.jpg)": "fonteImagem" },
+    "codigo": "let img = document.createElement('img'); img.id = $vri{idImagem}; img.src = $vri{fonteImagem}; document.body.appendChild(img);"
   },
   {
     "nome": "Criar Link",

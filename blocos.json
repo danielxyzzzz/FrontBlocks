@@ -215,13 +215,13 @@
   {
     "nome": "Alterar Posição",
     "cor": "#FFC107",
-    "entradas": { "ID do Elemento (ex: caixa1)": "", "Posição X (ex: 100)": "", "Posição Y (ex: 200)": "" },
+    "entradas": { "ID do Elemento (ex: caixa1)": "idElemento", "Posição X (ex: 100)": "posicaoX", "Posição Y (ex: 200)": "posicaoY" },
     "codigo": "let elem = document.getElementById('$vri{idElemento}'); elem.style.position = 'absolute'; elem.style.left = '$vri{posicaoX}px'; elem.style.top = '$vri{posicaoY}px';"
   },
   {
     "nome": "Alterar Largura e Altura",
     "cor": "#FFC107",
-    "entradas": { "ID do Elemento (ex: caixa1)": "", "Largura (ex: 300)": "", "Altura (ex: 200)": "" },
+    "entradas": { "ID do Elemento (ex: caixa1)": "idElemento", "Largura (ex: 300)": "largura", "Altura (ex: 200)": "altura" },
     "codigo": "let elem = document.getElementById('$vri{idElemento}'); elem.style.width = '$vri{largura}px'; elem.style.height = '$vri{altura}px';"
   },
   {

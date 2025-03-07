@@ -3,7 +3,7 @@
     "nome": "Função",
     "cor": "#4CAF50",
     "entradas": { "Nome": "nomeFuncao" },
-    "codigo": "function $vri{nomeFuncao}() {"
+    "codigo": "function nomeFuncao() {"
   },
   {
     "nome": "Fim Função",
@@ -15,67 +15,67 @@
     "nome": "Criar Botão",
     "cor": "#FF9D00",
     "entradas": { "ID do Botão": "idBotao", "Texto": "textoBotao" },
-    "codigo": "let botao = document.createElement('button'); botao.id = $vri{idBotao}; botao.innerText = $vri{textoBotao}; document.body.appendChild(botao);"
+    "codigo": "let botao = document.createElement('button'); botao.id = idBotao; botao.innerText = textoBotao; document.body.appendChild(botao);"
   },
   {
     "nome": "Criar Div",
     "cor": "#FF9D00",
     "entradas": { "ID da Div": "idDiv" },
-    "codigo": "let div = document.createElement('div'); div.id = $vri{idDiv}; document.body.appendChild(div);"
+    "codigo": "let div = document.createElement('div'); div.id = idDiv; document.body.appendChild(div);"
   },
   {
     "nome": "Evento Click",
     "cor": "#FF9D00",
     "entradas": { "ID do Botão": "idBotao", "Código": "codigoClick" },
-    "codigo": "document.getElementById($vri{idBotao}).addEventListener('click', function() { $vri{codigoClick}; });"
+    "codigo": "document.getElementById(idBotao).addEventListener('click', function() { codigoClick; });"
   },
   {
     "nome": "Chamar Função",
     "cor": "#2196F3",
     "entradas": { "Nome da Função": "nomeFuncao" },
-    "codigo": "$vri{nomeFuncao}();"
+    "codigo": "nomeFuncao();"
   },
   {
     "nome": "Criar Variável",
     "cor": "#FFC107",
     "entradas": { "Nome": "nomeVar", "Valor": "valorVar" },
-    "codigo": "let $vri{nomeVar} = $vri{valorVar};"
+    "codigo": "let nomeVar = valorVar;"
   },
   {
     "nome": "Alterar Variável",
     "cor": "#FF9800",
     "entradas": { "Nome": "nomeVar", "Novo Valor": "novoValor" },
-    "codigo": "$vri{nomeVar} = $vri{novoValor};"
+    "codigo": "nomeVar = novoValor;"
   },
   {
     "nome": "Soma",
     "cor": "#2196F3",
     "entradas": { "Número 1": "num1", "Número 2": "num2", "Salvar em": "resultado" },
-    "codigo": "let $vri{resultado} = $vri{num1} + $vri{num2};"
+    "codigo": "let resultado = num1 + num2;"
   },
   {
     "nome": "Subtração",
     "cor": "#2196F3",
     "entradas": { "Número 1": "num1", "Número 2": "num2", "Salvar em": "resultado" },
-    "codigo": "let $vri{resultado} = $vri{num1} - $vri{num2};"
+    "codigo": "let resultado = num1 - num2;"
   },
   {
     "nome": "Multiplicação",
     "cor": "#2196F3",
     "entradas": { "Número 1": "num1", "Número 2": "num2", "Salvar em": "resultado" },
-    "codigo": "let $vri{resultado} = $vri{num1} * $vri{num2};"
+    "codigo": "let resultado = num1 * num2;"
   },
   {
     "nome": "Divisão",
     "cor": "#2196F3",
     "entradas": { "Número 1": "num1", "Número 2": "num2", "Salvar em": "resultado" },
-    "codigo": "let $vri{resultado} = $vri{num1} / $vri{num2};"
+    "codigo": "let resultado = num1 / num2;"
   },
   {
     "nome": "Se",
     "cor": "#9C27B0",
     "entradas": { "Condição": "condicao" },
-    "codigo": "if ($vri{condicao}) {"
+    "codigo": "if (condicao) {"
   },
   {
     "nome": "Senão",
@@ -93,66 +93,66 @@
     "nome": "Criar Imagem",
     "cor": "#FF9800",
     "entradas": { "ID da Imagem": "idImagem", "Fonte da Imagem": "fonteImagem" },
-    "codigo": "let img = document.createElement('img'); img.id = $vri{idImagem}; img.src = $vri{fonteImagem}; document.body.appendChild(img);"
+    "codigo": "let img = document.createElement('img'); img.id = idImagem; img.src = fonteImagem; document.body.appendChild(img);"
   },
   {
     "nome": "Criar Link",
     "cor": "#FF9800",
     "entradas": { "ID do Link": "idLink", "URL": "urlLink", "Texto": "textoLink" },
-    "codigo": "let link = document.createElement('a'); link.id = $vri{idLink}; link.href = $vri{urlLink}; link.innerText = $vri{textoLink}; document.body.appendChild(link);"
+    "codigo": "let link = document.createElement('a'); link.id = idLink; link.href = urlLink; link.innerText = textoLink; document.body.appendChild(link);"
   },
   {
     "nome": "Alterar Texto",
     "cor": "#FFC107",
     "entradas": { "ID do Elemento": "idElemento", "Novo Texto": "novoTexto" },
-    "codigo": "document.getElementById($vri{idElemento}).innerText = $vri{novoTexto};"
+    "codigo": "document.getElementById(idElemento).innerText = novoTexto;"
   },
   {
     "nome": "Alterar Cor de Fundo",
     "cor": "#FFC107",
     "entradas": { "ID do Elemento": "idElemento", "Nova Cor": "corFundo" },
-    "codigo": "document.getElementById($vri{idElemento}).style.backgroundColor = $vri{corFundo};"
+    "codigo": "document.getElementById(idElemento).style.backgroundColor = corFundo;"
   },
   {
     "nome": "Alterar Cor do Texto",
     "cor": "#FFC107",
     "entradas": { "ID do Elemento": "idElemento", "Nova Cor": "corTexto" },
-    "codigo": "document.getElementById($vri{idElemento}).style.color = $vri{corTexto};"
+    "codigo": "document.getElementById(idElemento).style.color = corTexto;"
   },
   {
     "nome": "Remover Elemento",
     "cor": "#F44336",
     "entradas": { "ID do Elemento": "idElemento" },
-    "codigo": "document.getElementById($vri{idElemento}).remove();"
+    "codigo": "document.getElementById(idElemento).remove();"
   },
   {
     "nome": "Alterar Visibilidade",
     "cor": "#FFC107",
     "entradas": { "ID do Elemento": "idElemento", "Visibilidade": "visibilidade" },
-    "codigo": "document.getElementById($vri{idElemento}).style.visibility = $vri{visibilidade};"
+    "codigo": "document.getElementById(idElemento).style.visibility = visibilidade;"
   },
   {
     "nome": "Código HTML Personalizado",
     "cor": "#9C27B0",
     "entradas": { "Código HTML": "codigoHtml" },
-    "codigo": "document.body.innerHTML += $vri{codigoHtml};"
+    "codigo": "document.body.innerHTML += codigoHtml;"
   },
   {
     "nome": "Código CSS Personalizado",
     "cor": "#009688",
     "entradas": { "Código CSS": "codigoCss" },
-    "codigo": "let estilo = document.createElement('style'); estilo.innerHTML = $vri{codigoCss}; document.head.appendChild(estilo);"
+    "codigo": "let estilo = document.createElement('style'); estilo.innerHTML = codigoCss; document.head.appendChild(estilo);"
   },
   {
     "nome": "Código JavaScript Personalizado",
     "cor": "#FF5722",
     "entradas": { "Código JS": "codigoJs" },
-    "codigo": "eval($vri{codigoJs});"
+    "codigo": "eval(codigoJs);"
   },
   {
     "nome": "Definir Background",
     "cor": "#3F51B5",
     "entradas": { "Cor ou URL": "bgValor" },
-    "codigo": "document.body.style.background = $vri{bgValor};"
+    "codigo": "document.body.style.background = bgValor;"
   }
 ]

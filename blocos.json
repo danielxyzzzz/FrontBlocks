@@ -227,67 +227,67 @@
   {
     "nome": "Alterar Bordas",
     "cor": "#FFC107",
-    "entradas": { "ID do Elemento (ex: caixa1)": "", "Borda (ex: 2px solid #000)": "" },
+    "entradas": { "ID do Elemento (ex: caixa1)": "idElemento", "Borda (ex: 2px solid #000)": "borda" },
     "codigo": "document.getElementById('$vri{idElemento}').style.border = '$vri{borda}';"
   },
   {
     "nome": "Alterar Opacidade",
     "cor": "#FFC107",
-    "entradas": { "ID do Elemento (ex: caixa1)": "", "Opacidade (ex: 0.5)": "" },
+    "entradas": { "ID do Elemento (ex: caixa1)": "idElemento", "Opacidade (ex: 0.5)": "opacidade" },
     "codigo": "document.getElementById('$vri{idElemento}').style.opacity = '$vri{opacidade}';"
   },
   {
     "nome": "Alterar Margem",
     "cor": "#FFC107",
-    "entradas": { "ID do Elemento (ex: container)": "", "Margem (ex: 20px)": "" },
+    "entradas": { "ID do Elemento (ex: container)": "idElemento", "Margem (ex: 20px)": "margem" },
     "codigo": "document.getElementById('$vri{idElemento}').style.margin = '$vri{margem}';"
   },
   {
     "nome": "Alterar Padding",
     "cor": "#FFC107",
-    "entradas": { "ID do Elemento (ex: container)": "", "Padding (ex: 15px)": "" },
+    "entradas": { "ID do Elemento (ex: container)": "idElemento", "Padding (ex: 15px)": "padding" },
     "codigo": "document.getElementById('$vri{idElemento}').style.padding = '$vri{padding}';"
   },
   {
     "nome": "Remover Elemento",
     "cor": "#F44336",
-    "entradas": { "ID do Elemento (ex: paragrafo1)": "" },
+    "entradas": { "ID do Elemento (ex: paragrafo1)": "idElemento" },
     "codigo": "document.getElementById('$vri{idElemento}').remove();"
   },
   {
     "nome": "Adicionar Classe",
     "cor": "#FF9800",
-    "entradas": { "ID do Elemento (ex: container)": "", "Classe (ex: destaque)": "" },
+    "entradas": { "ID do Elemento (ex: container)": "idElemento", "Classe (ex: destaque)": "classeElemento" },
     "codigo": "document.getElementById('$vri{idElemento}').classList.add('$vri{classeElemento}');"
   },
   {
     "nome": "Remover Classe",
     "cor": "#F44336",
-    "entradas": { "ID do Elemento (ex: container)": "", "Classe (ex: destaque)": "" },
+    "entradas": { "ID do Elemento (ex: container)": "idElemento", "Classe (ex: destaque)": "classeElemento" },
     "codigo": "document.getElementById('$vri{idElemento}').classList.remove('$vri{classeElemento}');"
   },
   {
     "nome": "Alterar Visibilidade",
     "cor": "#FFC107",
-    "entradas": { "ID do Elemento (ex: container)": "", "Visibilidade (ex: hidden)": "" },
+    "entradas": { "ID do Elemento (ex: container)": "idElemento", "Visibilidade (ex: hidden)": "visibilidade" },
     "codigo": "document.getElementById('$vri{idElemento}').style.visibility = '$vri{visibilidade}';"
   },
   {
     "nome": "Alterar Display",
     "cor": "#FFC107",
-    "entradas": { "ID do Elemento (ex: container)": "", "Display (ex: block)": "" },
+    "entradas": { "ID do Elemento (ex: container)": "idElemento", "Display (ex: block)": "display" },
     "codigo": "document.getElementById('$vri{idElemento}').style.display = '$vri{display}';"
   },
   {
     "nome": "Alterar Z-Index",
     "cor": "#FFC107",
-    "entradas": { "ID do Elemento (ex: caixa1)": "", "Z-Index (ex: 100)": "" },
+    "entradas": { "ID do Elemento (ex: caixa1)": "idElemento", "Z-Index (ex: 100)": "zIndex" },
     "codigo": "document.getElementById('$vri{idElemento}').style.zIndex = '$vri{zIndex}';"
   },
   {
     "nome": "Alterar Cor de Bordas",
     "cor": "#FFC107",
-    "entradas": { "ID do Elemento (ex: caixa1)": "", "Cor de Bordas (ex: #ff0000)": "" },
+    "entradas": { "ID do Elemento (ex: caixa1)": "idElemento", "Cor de Bordas (ex: #ff0000)": "corBordas" },
     "codigo": "document.getElementById('$vri{idElemento}').style.borderColor = '$vri{corBordas}';"
   }
 ]

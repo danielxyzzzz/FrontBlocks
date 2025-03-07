@@ -171,11 +171,32 @@
     "codigo": "let elem = document.getElementById('$vri{idElemento}'); let posX = parseInt(window.getComputedStyle(elem).left) || 0; let posY = parseInt(window.getComputedStyle(elem).top) || 0; elem.style.position = 'absolute'; elem.style.left = (posX + parseInt('$vri{deslocamentoX}')) + 'px'; elem.style.top = (posY + parseInt('$vri{deslocamentoY}')) + 'px';"
   },
   {
-    "nome": "Criar Parágrafo",
-    "cor": "#FF9800",
-    "entradas": { "ID do Parágrafo (ex: paragrafo1)": "idP", "Texto do Parágrafo (ex: Olá, mundo!)": "textP" },
-    "codigo": "let p = document.createElement('p'); p.id = $vri{idP}; p.innerText = $vri{textP}; document.body.appendChild(p);"
+  "nome": "Definir Background",
+  "cor": "#2196F3",
+  "entradas": { 
+    "Cor ou URL da Imagem": "bgValue"
   },
+  "codigo": "document.body.style.background = \"$vri{bgValue}\";"
+},
+  {
+  "nome": "Criar Título",
+  "cor": "#FF9800",
+  "entradas": { 
+    "ID do Título (ex: titulo1)": "idH", 
+    "Texto do Título (ex: Meu Título)": "textH",
+    "Nível do Título (1-6, ex: 1 para <h1>)": "levelH"
+  },
+  "codigo": "let h = document.createElement('h' + $vri{levelH}); h.id = \"$vri{idH}\"; h.innerText = \"$vri{textH}\"; document.body.appendChild(h);"
+},
+  {
+  "nome": "Criar Parágrafo",
+  "cor": "#FF9800",
+  "entradas": { 
+    "ID do Parágrafo (ex: paragrafo1)": "idP", 
+    "Texto do Parágrafo (ex: Olá, mundo!)": "textP" 
+  },
+  "codigo": "let p = document.createElement('p'); p.id = \"$vri{idP}\"; p.innerText = \"$vri{textP}\"; document.body.appendChild(p);"
+},
   {
     "nome": "Criar Imagem",
     "cor": "#FF9800",

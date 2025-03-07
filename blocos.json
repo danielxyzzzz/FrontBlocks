@@ -185,31 +185,31 @@
   {
     "nome": "Criar Link",
     "cor": "#FF9800",
-    "entradas": { "ID do Link (ex: link1)": "", "URL do Link (ex: http://example.com)": "" },
+    "entradas": { "ID do Link (ex: link1)": "idLink", "URL do Link (ex: http://example.com)": "urlLink" },
     "codigo": "let a = document.createElement('a'); a.id = '$vri{idLink}'; a.href = '$vri{urlLink}'; document.body.appendChild(a);"
   },
   {
     "nome": "Alterar Texto de Elemento",
     "cor": "#FFC107",
-    "entradas": { "ID do Elemento (ex: paragrafo1)": "", "Novo Texto (ex: Texto atualizado)": "" },
+    "entradas": { "ID do Elemento (ex: paragrafo1)": "idElemento", "Novo Texto (ex: Texto atualizado)": "novoTexto" },
     "codigo": "document.getElementById('$vri{idElemento}').innerText = '$vri{novoTexto}';"
   },
   {
     "nome": "Alterar Cor de Fundo",
     "cor": "#FFC107",
-    "entradas": { "ID do Elemento (ex: container)": "", "Cor de Fundo (ex: #ff0000)": "" },
+    "entradas": { "ID do Elemento (ex: container)": "idElemento", "Cor de Fundo (ex: #ff0000)": "corFundo" },
     "codigo": "document.getElementById('$vri{idElemento}').style.backgroundColor = '$vri{corFundo}';"
   },
   {
     "nome": "Alterar Cor do Texto",
     "cor": "#FFC107",
-    "entradas": { "ID do Elemento (ex: texto1)": "", "Cor do Texto (ex: #ffffff)": "" },
+    "entradas": { "ID do Elemento (ex: texto1)": "idElemento", "Cor do Texto (ex: #ffffff)": "corTexto" },
     "codigo": "document.getElementById('$vri{idElemento}').style.color = '$vri{corTexto}';"
   },
   {
     "nome": "Alterar Tamanho da Fonte",
     "cor": "#FFC107",
-    "entradas": { "ID do Elemento (ex: titulo1)": "", "Tamanho da Fonte (ex: 24px)": "" },
+    "entradas": { "ID do Elemento (ex: titulo1)": "idElemento", "Tamanho da Fonte (ex: 24px)": "tamanhoFonte" },
     "codigo": "document.getElementById('$vri{idElemento}').style.fontSize = '$vri{tamanhoFonte}';"
   },
   {

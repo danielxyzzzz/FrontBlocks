@@ -167,3 +167,4 @@
     "entradas": { "Cor ou URL": "bgValor" },
     "codigo": "document.body.style.background = '$vri{bgValor}';"
   }
+]

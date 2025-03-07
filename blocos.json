@@ -150,8 +150,7 @@
     "entradas": {
       "ID do Botão": "idBotao",
       "Texto do Botão": "textoBotao",
-      "URL": "urlBotao"
-    },
+      "URL": "urlBotao",
     "codigo": "let btn = document.createElement('button'); btn.id = '$vri{idBotao}'; btn.innerText = '$vri{textoBotao}'; btn.onclick = function() { window.location.href = '$vri{urlBotao}'; }; document.body.appendChild(btn);"
   },
   {
@@ -161,7 +160,6 @@
       "ID do Botão": "idBotao",
       "Texto do Botão": "textoBotao",
       "Nome da Função": "funcaoBotao"
-    },
     "codigo": "let btn = document.createElement('button'); btn.id = '$vri{idBotao}'; btn.innerText = '$vri{textoBotao}'; btn.onclick = function() { $vri{funcaoBotao}(); }; document.body.appendChild(btn);"
   },
   {
@@ -174,8 +172,7 @@
   "nome": "Definir Background",
   "cor": "#2196F3",
   "entradas": { 
-    "Cor ou URL da Imagem": "bgValue"
-  },
+  "Cor ou URL da Imagem": "bgValue",
   "codigo": "document.body.style.background = \"$vri{bgValue}\";"
 },
   {
@@ -184,8 +181,7 @@
   "entradas": { 
     "ID do Título (ex: titulo1)": "idH", 
     "Texto do Título (ex: Meu Título)": "textH",
-    "Nível do Título (1-6, ex: 1 para <h1>)": "levelH"
-  },
+    "Nível do Título (1-6, ex: 1 para <h1>)": "levelH",
   "codigo": "let h = document.createElement('h' + $vri{levelH}); h.id = \"$vri{idH}\"; h.innerText = \"$vri{textH}\"; document.body.appendChild(h);"
 },
   {
@@ -193,8 +189,7 @@
   "cor": "#FF9800",
   "entradas": { 
     "ID do Parágrafo (ex: paragrafo1)": "idP", 
-    "Texto do Parágrafo (ex: Olá, mundo!)": "textP" 
-  },
+    "Texto do Parágrafo (ex: Olá, mundo!)": "textP",
   "codigo": "let p = document.createElement('p'); p.id = \"$vri{idP}\"; p.innerText = \"$vri{textP}\"; document.body.appendChild(p);"
 },
   {

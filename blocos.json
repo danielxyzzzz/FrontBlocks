@@ -3,79 +3,62 @@
     "nome": "Função",
     "cor": "#4CAF50",
     "entradas": { "Nome": "nomeFuncao" },
-    "codigo": "function nomeFuncao() {"
+    "codigo": "function $vri{nomeFuncao}() {"
+  },
+  {
+    "nome": "Executar código JavaScript",
+    "cor": "#4CAF50",
+    "entradas": { "Código": "nco" },
+    "codigo": "window.eval($vri{nco})"
   },
   {
     "nome": "Fim Função",
-    "cor": "#F44336",
+    "cor": "#f44336",
     "entradas": {},
     "codigo": "}"
   },
-  {
-    "nome": "Criar Botão",
-    "cor": "#FF9D00",
-    "entradas": { "ID do Botão": "idBotao", "Texto": "textoBotao" },
-    "codigo": "let botao = document.createElement('button'); botao.id = idBotao; botao.innerText = textoBotao; document.body.appendChild(botao);"
+{
+  "nome": "Criar Botão",
+  "cor": "#ff9d00",
+  "entradas": {
+    "Id do Botão": "idDoBotao",
+    "Texto": "textBtn"
   },
-  {
-    "nome": "Criar Div",
-    "cor": "#FF9D00",
-    "entradas": { "ID da Div": "idDiv" },
-    "codigo": "let div = document.createElement('div'); div.id = idDiv; document.body.appendChild(div);"
+  "codigo": "function criarBotao(idDoBotao, textBtn) {\n  const botao = document.createElement('button');\n  botao.id = idDoBotao;\n  botao.innerText = textBtn;\n  document.body.appendChild(botao);\n}\n\nlet idDoBotao = '$vri{idDoBotao}';\nlet textBtn = '$vri{textBtn}';\ncriarBotao(idDoBotao, textBtn);"
+},
+{
+  "nome": "Evento Click",
+  "cor": "#ff9d00",
+  "entradas": {
+    "Id do Botão": "idEpm",
+    "Código": "codigoClick"
   },
-  {
-    "nome": "Evento Click",
-    "cor": "#FF9D00",
-    "entradas": { "ID do Botão": "idBotao", "Código": "codigoClick" },
-    "codigo": "document.getElementById(idBotao).addEventListener('click', function() { codigoClick; });"
-  },
+  "codigo": "function eventoClick(id, codigo) {\n  const botao = document.getElementById(id);\n  if (botao) {\n    botao.addEventListener('click', function() {\n      eval(codigo);\n    });\n  }\n}\n\nlet idEpm = '$vri{idEpm}';\nlet codigoClick = '$vri{codigoClick}';\neventoClick(idEpm, codigoClick);"
+},
+
   {
     "nome": "Chamar Função",
     "cor": "#2196F3",
-    "entradas": { "Nome da Função": "nomeFuncao" },
-    "codigo": "nomeFuncao();"
+    "entradas": { "Função": "funcao" },
+    "codigo": "$vri{funcao}();"
   },
   {
-    "nome": "Criar Variável",
+    "nome": "Variável",
     "cor": "#FFC107",
     "entradas": { "Nome": "nomeVar", "Valor": "valorVar" },
-    "codigo": "let nomeVar = valorVar;"
+    "codigo": "let $vri{nomeVar} = $vri{valorVar};"
   },
   {
-    "nome": "Alterar Variável",
+    "nome": "Mudar Variável",
     "cor": "#FF9800",
-    "entradas": { "Nome": "nomeVar", "Novo Valor": "novoValor" },
-    "codigo": "nomeVar = novoValor;"
-  },
-  {
-    "nome": "Soma",
-    "cor": "#2196F3",
-    "entradas": { "Número 1": "num1", "Número 2": "num2", "Salvar em": "resultado" },
-    "codigo": "let resultado = num1 + num2;"
-  },
-  {
-    "nome": "Subtração",
-    "cor": "#2196F3",
-    "entradas": { "Número 1": "num1", "Número 2": "num2", "Salvar em": "resultado" },
-    "codigo": "let resultado = num1 - num2;"
-  },
-  {
-    "nome": "Multiplicação",
-    "cor": "#2196F3",
-    "entradas": { "Número 1": "num1", "Número 2": "num2", "Salvar em": "resultado" },
-    "codigo": "let resultado = num1 * num2;"
-  },
-  {
-    "nome": "Divisão",
-    "cor": "#2196F3",
-    "entradas": { "Número 1": "num1", "Número 2": "num2", "Salvar em": "resultado" },
-    "codigo": "let resultado = num1 / num2;"
+    "entradas": { "Nome": "nomeVar", "Valor": "valorVar" },
+    "codigo": "$vri{nomeVar} = $vri{valorVar};"
   },
   {
     "nome": "Se",
     "cor": "#9C27B0",
     "entradas": { "Condição": "condicao" },
-    "codigo": "if (condicao) {"
+    "codigo": "if ($vri{condicao}) {"
   },
   {
     "nome": "Senão",
@@ -90,69 +73,221 @@
     "codigo": "}"
   },
   {
+    "nome": "Enquanto",
+    "cor": "#3F51B5",
+    "entradas": { "Condição": "condicao" },
+    "codigo": "while ($vri{condicao}) {"
+  },
+  {
+    "nome": "Fim Enquanto",
+    "cor": "#673AB7",
+    "entradas": {},
+    "codigo": "}"
+  },
+  {
+    "nome": "Esperar",
+    "cor": "#607D8B",
+    "entradas": { "Milissegundos": "tempo" },
+    "codigo": "await new Promise(resolve => setTimeout(resolve, $vri{tempo}));"
+  },
+  {
+    "nome": "Retornar",
+    "cor": "#795548",
+    "entradas": { "Valor": "valor" },
+    "codigo": "return $vri{valor};"
+  },
+  {
+    "nome": "Somar",
+    "cor": "#FFC107",
+    "entradas": { "Salvar na variável": "resultado", "A": "a", "B": "b" },
+    "codigo": "let $vri{resultado} = $vri{a} + $vri{b};"
+  },
+  {
+    "nome": "Subtrair",
+    "cor": "#FFC107",
+    "entradas": { "Salvar na variável": "resultado", "A": "a", "B": "b" },
+    "codigo": "let $vri{resultado} = $vri{a} - $vri{b};"
+  },
+  {
+    "nome": "Multiplicar",
+    "cor": "#FFC107",
+    "entradas": { "Salvar na variável": "resultado", "A": "a", "B": "b" },
+    "codigo": "let $vri{resultado} = $vri{a} * $vri{b};"
+  },
+  {
+    "nome": "Dividir",
+    "cor": "#FFC107",
+    "entradas": { "Salvar na variável": "resultado", "A": "a", "B": "b" },
+    "codigo": "let $vri{resultado} = $vri{a} / $vri{b};"
+  },
+  {
+    "nome": "Comparar",
+    "cor": "#9C27B0",
+    "entradas": { "A": "a", "B": "b" },
+    "codigo": "$vri{a} === $vri{b};"
+  },
+  {
+    "nome": "E",
+    "cor": "#9C27B0",
+    "entradas": { "A": "a", "B": "b" },
+    "codigo": "$vri{a} && $vri{b};"
+  },
+  {
+    "nome": "Ou",
+    "cor": "#9C27B0",
+    "entradas": { "A": "a", "B": "b" },
+    "codigo": "$vri{a} || $vri{b};"
+  },
+  {
+    "nome": "Imprimir",
+    "cor": "#2196F3",
+    "entradas": { "Texto": "texto" },
+    "codigo": "console.log($vri{texto});"
+  },
+  {
+    "nome": "Criar Botão com URL",
+    "cor": "#FF9800",
+    "entradas": {
+      "ID do Botão": "idBotao",
+      "Texto do Botão": "textoBotao",
+      "URL": "urlBotao"
+    },
+    "codigo": "let btn = document.createElement('button'); btn.id = '$vri{idBotao}'; btn.innerText = '$vri{textoBotao}'; btn.onclick = function() { window.location.href = '$vri{urlBotao}'; }; document.body.appendChild(btn);"
+  },
+  {
+    "nome": "Criar Botão para Chamar Função",
+    "cor": "#FF9800",
+    "entradas": {
+      "ID do Botão": "idBotao",
+      "Texto do Botão": "textoBotao",
+      "Nome da Função": "funcaoBotao"
+    },
+    "codigo": "let btn = document.createElement('button'); btn.id = '$vri{idBotao}'; btn.innerText = '$vri{textoBotao}'; btn.onclick = function() { $vri{funcaoBotao}(); }; document.body.appendChild(btn);"
+  },
+  {
+    "nome": "Mover Elemento para Direção X, Y",
+    "cor": "#4CAF50",
+    "entradas": { "ID do Elemento (ex: caixa1)": "caixa1", "Deslocamento X (ex: 5 ou -5)": "5", "Deslocamento Y (ex: 5 ou -5)": "-5" },
+    "codigo": "let elem = document.getElementById('$vri{idElemento}'); let posX = parseInt(window.getComputedStyle(elem).left) || 0; let posY = parseInt(window.getComputedStyle(elem).top) || 0; elem.style.position = 'absolute'; elem.style.left = (posX + parseInt('$vri{deslocamentoX}')) + 'px'; elem.style.top = (posY + parseInt('$vri{deslocamentoY}')) + 'px';"
+  },
+  {
+    "nome": "Criar Parágrafo",
+    "cor": "#FF9800",
+    "entradas": { "ID do Parágrafo (ex: paragrafo1)": "idP", "Texto do Parágrafo (ex: Olá, mundo!)": "textP" },
+    "codigo": "let p = document.createElement('p'); p.id = $vri{idP}; p.innerText = $vri{textP}; document.body.appendChild(p);"
+  },
+  {
     "nome": "Criar Imagem",
     "cor": "#FF9800",
-    "entradas": { "ID da Imagem": "idImagem", "Fonte da Imagem": "fonteImagem" },
-    "codigo": "let img = document.createElement('img'); img.id = idImagem; img.src = fonteImagem; document.body.appendChild(img);"
+    "entradas": { "ID da Imagem (ex: imagem1)": "idImagem", "Fonte da Imagem (ex: http://example.com/imagem.jpg)": "fonteImagem" },
+    "codigo": "let img = document.createElement('img'); img.id = $vri{idImagem}; img.src = $vri{fonteImagem}; document.body.appendChild(img);"
   },
   {
     "nome": "Criar Link",
     "cor": "#FF9800",
-    "entradas": { "ID do Link": "idLink", "URL": "urlLink", "Texto": "textoLink" },
-    "codigo": "let link = document.createElement('a'); link.id = idLink; link.href = urlLink; link.innerText = textoLink; document.body.appendChild(link);"
+    "entradas": { "ID do Link (ex: link1)": "", "URL do Link (ex: http://example.com)": "" },
+    "codigo": "let a = document.createElement('a'); a.id = '$vri{idLink}'; a.href = '$vri{urlLink}'; document.body.appendChild(a);"
   },
   {
-    "nome": "Alterar Texto",
+    "nome": "Alterar Texto de Elemento",
     "cor": "#FFC107",
-    "entradas": { "ID do Elemento": "idElemento", "Novo Texto": "novoTexto" },
-    "codigo": "document.getElementById(idElemento).innerText = novoTexto;"
+    "entradas": { "ID do Elemento (ex: paragrafo1)": "", "Novo Texto (ex: Texto atualizado)": "" },
+    "codigo": "document.getElementById('$vri{idElemento}').innerText = '$vri{novoTexto}';"
   },
   {
     "nome": "Alterar Cor de Fundo",
     "cor": "#FFC107",
-    "entradas": { "ID do Elemento": "idElemento", "Nova Cor": "corFundo" },
-    "codigo": "document.getElementById(idElemento).style.backgroundColor = corFundo;"
+    "entradas": { "ID do Elemento (ex: container)": "", "Cor de Fundo (ex: #ff0000)": "" },
+    "codigo": "document.getElementById('$vri{idElemento}').style.backgroundColor = '$vri{corFundo}';"
   },
   {
     "nome": "Alterar Cor do Texto",
     "cor": "#FFC107",
-    "entradas": { "ID do Elemento": "idElemento", "Nova Cor": "corTexto" },
-    "codigo": "document.getElementById(idElemento).style.color = corTexto;"
+    "entradas": { "ID do Elemento (ex: texto1)": "", "Cor do Texto (ex: #ffffff)": "" },
+    "codigo": "document.getElementById('$vri{idElemento}').style.color = '$vri{corTexto}';"
+  },
+  {
+    "nome": "Alterar Tamanho da Fonte",
+    "cor": "#FFC107",
+    "entradas": { "ID do Elemento (ex: titulo1)": "", "Tamanho da Fonte (ex: 24px)": "" },
+    "codigo": "document.getElementById('$vri{idElemento}').style.fontSize = '$vri{tamanhoFonte}';"
+  },
+  {
+    "nome": "Alterar Posição",
+    "cor": "#FFC107",
+    "entradas": { "ID do Elemento (ex: caixa1)": "idElemento", "Posição X (ex: 100)": "posicaoX", "Posição Y (ex: 200)": "posicaoY" },
+    "codigo": "let elem = document.getElementById('$vri{idElemento}'); elem.style.position = 'absolute'; elem.style.left = '$vri{posicaoX}px'; elem.style.top = '$vri{posicaoY}px';"
+  },
+  {
+    "nome": "Alterar Largura e Altura",
+    "cor": "#FFC107",
+    "entradas": { "ID do Elemento (ex: caixa1)": "idElemento", "Largura (ex: 300)": "largura", "Altura (ex: 200)": "altura" },
+    "codigo": "let elem = document.getElementById('$vri{idElemento}'); elem.style.width = '$vri{largura}px'; elem.style.height = '$vri{altura}px';"
+  },
+  {
+    "nome": "Alterar Bordas",
+    "cor": "#FFC107",
+    "entradas": { "ID do Elemento (ex: caixa1)": "", "Borda (ex: 2px solid #000)": "" },
+    "codigo": "document.getElementById('$vri{idElemento}').style.border = '$vri{borda}';"
+  },
+  {
+    "nome": "Alterar Opacidade",
+    "cor": "#FFC107",
+    "entradas": { "ID do Elemento (ex: caixa1)": "", "Opacidade (ex: 0.5)": "" },
+    "codigo": "document.getElementById('$vri{idElemento}').style.opacity = '$vri{opacidade}';"
+  },
+  {
+    "nome": "Alterar Margem",
+    "cor": "#FFC107",
+    "entradas": { "ID do Elemento (ex: container)": "", "Margem (ex: 20px)": "" },
+    "codigo": "document.getElementById('$vri{idElemento}').style.margin = '$vri{margem}';"
+  },
+  {
+    "nome": "Alterar Padding",
+    "cor": "#FFC107",
+    "entradas": { "ID do Elemento (ex: container)": "", "Padding (ex: 15px)": "" },
+    "codigo": "document.getElementById('$vri{idElemento}').style.padding = '$vri{padding}';"
   },
   {
     "nome": "Remover Elemento",
     "cor": "#F44336",
-    "entradas": { "ID do Elemento": "idElemento" },
-    "codigo": "document.getElementById(idElemento).remove();"
+    "entradas": { "ID do Elemento (ex: paragrafo1)": "" },
+    "codigo": "document.getElementById('$vri{idElemento}').remove();"
+  },
+  {
+    "nome": "Adicionar Classe",
+    "cor": "#FF9800",
+    "entradas": { "ID do Elemento (ex: container)": "", "Classe (ex: destaque)": "" },
+    "codigo": "document.getElementById('$vri{idElemento}').classList.add('$vri{classeElemento}');"
+  },
+  {
+    "nome": "Remover Classe",
+    "cor": "#F44336",
+    "entradas": { "ID do Elemento (ex: container)": "", "Classe (ex: destaque)": "" },
+    "codigo": "document.getElementById('$vri{idElemento}').classList.remove('$vri{classeElemento}');"
   },
   {
     "nome": "Alterar Visibilidade",
     "cor": "#FFC107",
-    "entradas": { "ID do Elemento": "idElemento", "Visibilidade": "visibilidade" },
-    "codigo": "document.getElementById(idElemento).style.visibility = visibilidade;"
+    "entradas": { "ID do Elemento (ex: container)": "", "Visibilidade (ex: hidden)": "" },
+    "codigo": "document.getElementById('$vri{idElemento}').style.visibility = '$vri{visibilidade}';"
   },
   {
-    "nome": "Código HTML Personalizado",
-    "cor": "#9C27B0",
-    "entradas": { "Código HTML": "codigoHtml" },
-    "codigo": "document.body.innerHTML += codigoHtml;"
+    "nome": "Alterar Display",
+    "cor": "#FFC107",
+    "entradas": { "ID do Elemento (ex: container)": "", "Display (ex: block)": "" },
+    "codigo": "document.getElementById('$vri{idElemento}').style.display = '$vri{display}';"
   },
   {
-    "nome": "Código CSS Personalizado",
-    "cor": "#009688",
-    "entradas": { "Código CSS": "codigoCss" },
-    "codigo": "let estilo = document.createElement('style'); estilo.innerHTML = codigoCss; document.head.appendChild(estilo);"
+    "nome": "Alterar Z-Index",
+    "cor": "#FFC107",
+    "entradas": { "ID do Elemento (ex: caixa1)": "", "Z-Index (ex: 100)": "" },
+    "codigo": "document.getElementById('$vri{idElemento}').style.zIndex = '$vri{zIndex}';"
   },
   {
-    "nome": "Código JavaScript Personalizado",
-    "cor": "#FF5722",
-    "entradas": { "Código JS": "codigoJs" },
-    "codigo": "eval(codigoJs);"
-  },
-  {
-    "nome": "Definir Background",
-    "cor": "#3F51B5",
-    "entradas": { "Cor ou URL": "bgValor" },
-    "codigo": "document.body.style.background = bgValor;"
+    "nome": "Alterar Cor de Bordas",
+    "cor": "#FFC107",
+    "entradas": { "ID do Elemento (ex: caixa1)": "", "Cor de Bordas (ex: #ff0000)": "" },
+    "codigo": "document.getElementById('$vri{idElemento}').style.borderColor = '$vri{corBordas}';"
   }
 ]

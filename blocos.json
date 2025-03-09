@@ -289,5 +289,14 @@
     "cor": "#FFC107",
     "entradas": { "ID do Elemento (ex: caixa1)": "idElemento", "Cor de Bordas (ex: #ff0000)": "corBordas" },
     "codigo": "document.getElementById('$vri{idElemento}').style.borderColor = '$vri{corBordas}';"
-  }
+  },
+  {
+  "nome": "Criar Input",
+  "cor": "#009dff",
+  "entradas": {
+    "Id do Input": "idDoInput",
+    "Placeholder": "placeholderText"
+  },
+  "codigo": "function criarInput(idDoInput, placeholderText) {\n  const input = document.createElement('input');\n  input.id = idDoInput;\n  input.type = 'text';\n  input.placeholder = placeholderText;\n  document.body.appendChild(input);\n}\n\nlet idDoInput = '$vri{idDoInput}';\nlet placeholderText = '$vri{placeholderText}';\ncriarInput(idDoInput, placeholderText);"
+  },
 ]

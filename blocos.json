@@ -295,8 +295,7 @@
   "cor": "#009dff",
   "entradas": {
     "Id do Input": "idDoInput",
-    "Placeholder": "placeholderText",
+    "Placeholder": "placeholderText"},
     "codigo": "function criarInput(idDoInput, placeholderText) {\n  const input = document.createElement('input');\n  input.id = idDoInput;\n  input.type = 'text';\n  input.placeholder = placeholderText;\n  document.body.appendChild(input);\n}\n\nlet idDoInput = '$vri{idDoInput}';\nlet placeholderText = '$vri{placeholderText}';\ncriarInput(idDoInput, placeholderText);"
   }
-}
 ]

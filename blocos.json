@@ -17,6 +17,15 @@
     "entradas": {},
     "codigo": "}"
   },
+    {
+  "nome": "Definir Background (use aspas)",
+  "cor": "#009dff",
+  "entradas": {
+    "Cor": "cor",
+    "Imagem": "imagem"
+  },
+  "codigo": "document.body.style.backgroundColor = $vri{cor};\ndocument.body.style.backgroundImage = 'url($vri{imagem})';"
+},
 {
   "nome": "Criar Botão",
   "cor": "#ff9d00",

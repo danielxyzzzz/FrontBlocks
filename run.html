@@ -16,7 +16,7 @@
 
         const dbName = "BlockEngineDB";
         let db;
-        
+
         const request = indexedDB.open(dbName, 1);
 
         request.onupgradeneeded = (event) => {
@@ -28,13 +28,14 @@
 
         request.onsuccess = (event) => {
             db = event.target.result;
-            executeProjectCode();
+
+                      executeProjectCode();
         };
 
         request.onerror = (event) => {
             console.error('Erro ao abrir o banco de dados:', event);
         };
-        
+
         function executeProjectCode() {
             const projectId = getProjectId();
 
@@ -42,7 +43,7 @@
                 console.error('ID do projeto não fornecido na URL');
                 return;
             }
-            
+
             const transaction = db.transaction(["blocos"], "readonly");
             const objectStore = transaction.objectStore("blocos");
             const request = objectStore.get(projectId);
@@ -51,11 +52,36 @@
                 const project = event.target.result;
                 if (project) {
                     try {
+                        
                         window.eval(project.code);
                     } catch (error) {
                         console.error('Erro ao executar o código:', error);
                     }
+                } else {
+                    console.error('Projeto não encontrado');
+                }
+            };
 
+            request.onerror = (event) => {
+                console.error('Erro ao buscar o projeto:', event);
+            };
+        }
+
+        function downloadProjectHtml() {
+            const projectId = getProjectId();
+
+            if (!projectId) {
+                console.error('ID do projeto não fornecido na URL');
+                return;
+            }
+
+            const transaction = db.transaction(["blocos"], "readonly");
+            const objectStore = transaction.objectStore("blocos");
+            const request = objectStore.get(projectId);
+
+            request.onsuccess = (event) => {
+                const project = event.target.result;
+                if (project) {
                     const htmlContent = `
 <!DOCTYPE html>
 <html lang="pt">
@@ -68,12 +94,12 @@
 </html>`;
                     const script = document.createElement('script');
                     script.textContent = project.code;
-                    
+
                     const modifiedHtml = htmlContent.replace(
-                        '</body>', 
+                        '</body>',
                         `${script.outerHTML}</body>`
                     );
-                    
+
                     const modifiedBlob = new Blob([modifiedHtml], { type: 'text/html' });
                     const link = document.createElement('a');
                     link.href = URL.createObjectURL(modifiedBlob);
@@ -89,9 +115,23 @@
                 console.error('Erro ao buscar o projeto:', event);
             };
         }
-        javascript:(function () { var script = document.createElement('script'); script.src="https://cdn.jsdelivr.net/npm/eruda"; document.body.append(script); script.onload = function () { eruda.init(); } })();
+
+             document.getElementById("downloadBtn").addEventListener("click", () => {
+            if (db) {
+                downloadProjectHtml();
+            } else {
+                console.error('Banco de dados ainda não foi carregado.');
+            }
+        });
+       
+        javascript: (function () { 
+            var script = document.createElement('script'); 
+            script.src = "https://cdn.jsdelivr.net/npm/eruda"; 
+            document.body.append(script); 
+            script.onload = function () { 
+                eruda.init(); 
+            } 
+        })();
     </script>
-    
-    
 </body>
 </html>

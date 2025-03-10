@@ -120,24 +120,24 @@
     "entradas": { "Salvar na variável": "resultado", "A": "a", "B": "b" },
     "codigo": "let $vri{resultado} = $vri{a} / $vri{b};"
   },
-  {
-    "nome": "Comparar",
-    "cor": "#9C27B0",
-    "entradas": { "A": "a", "B": "b" },
-    "codigo": "$vri{a} === $vri{b};"
-  },
-  {
-    "nome": "E",
-    "cor": "#9C27B0",
-    "entradas": { "A": "a", "B": "b" },
-    "codigo": "$vri{a} && $vri{b};"
-  },
-  {
-    "nome": "Ou",
-    "cor": "#9C27B0",
-    "entradas": { "A": "a", "B": "b" },
-    "codigo": "$vri{a} || $vri{b};"
-  },
+{
+  "nome": "Igual a",
+  "cor": "#9C27B0",
+  "entradas": { "A": "a", "B": "b", "Var": "var" },
+  "codigo": "$vri{var} = $vri{a} === $vri{b};"
+},
+{
+  "nome": "E",
+  "cor": "#9C27B0",
+  "entradas": { "A": "a", "B": "b", "Var": "var" },
+  "codigo": "$vri{var} = $vri{a} && $vri{b};"
+},
+{
+  "nome": "Ou",
+  "cor": "#9C27B0",
+  "entradas": { "A": "a", "B": "b", "Var": "var" },
+  "codigo": "$vri{var} = $vri{a} || $vri{b};"
+},
   {
     "nome": "Imprimir",
     "cor": "#2196F3",

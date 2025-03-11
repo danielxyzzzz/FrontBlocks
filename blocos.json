@@ -71,7 +71,7 @@
     "nome": "Variável",
     "cor": "#FFC107",
     "entradas": { "Nome": "nomeVar", "Valor": "valorVar" },
-    "codigo": "let $vri{nomeVar} = $vri{valorVar};"
+    "codigo": "var $vri{nomeVar} = $vri{valorVar};"
   },
   {
     "nome": "Mudar Variável",

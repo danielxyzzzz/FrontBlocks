@@ -195,12 +195,15 @@
     "entradas": { "ID do Elemento (ex: caixa1)": "caixa1", "Deslocamento X (ex: 5 ou -5)": "5", "Deslocamento Y (ex: 5 ou -5)": "-5" },
     "codigo": "let elem = document.getElementById('$vri{idElemento}'); let posX = parseInt(window.getComputedStyle(elem).left) || 0; let posY = parseInt(window.getComputedStyle(elem).top) || 0; elem.style.position = 'absolute'; elem.style.left = (posX + parseInt('$vri{deslocamentoX}')) + 'px'; elem.style.top = (posY + parseInt('$vri{deslocamentoY}')) + 'px';"
   },
-  {
+ {
     "nome": "Criar Parágrafo",
     "cor": "#FF9800",
-    "entradas": { "ID do Parágrafo (ex: paragrafo1)": "idP", "Texto do Parágrafo (ex: Olá, mundo!)": "textP" },
-    "codigo": "let p = document.createElement('p'); p.id = $vri{idP}; p.innerText = $vri{textP}; document.body.appendChild(p);"
-  },
+    "entradas": { 
+        "ID do Parágrafo (ex: paragrafo1)": "idP", 
+        "Texto do Parágrafo (ex: Olá, ${nome}!)": "textP" 
+    },
+    "codigo": "let p = document.createElement('p'); p.id = $vri{idP}; p.innerText = eval(`$vri{textP}`); document.body.appendChild(p);"
+ },
   {
     "nome": "Criar Imagem",
     "cor": "#FF9800",
@@ -213,12 +216,15 @@
     "entradas": { "ID do Link (ex: link1)": "idLink", "URL do Link (ex: http://example.com)": "urlLink" },
     "codigo": "let a = document.createElement('a'); a.id = '$vri{idLink}'; a.href = '$vri{urlLink}'; document.body.appendChild(a);"
   },
-  {
+{
     "nome": "Alterar Texto de Elemento",
     "cor": "#FFC107",
-    "entradas": { "ID do Elemento (ex: paragrafo1)": "idElemento", "Novo Texto (ex: Texto atualizado)": "novoTexto" },
-    "codigo": "document.getElementById('$vri{idElemento}').innerText = '$vri{novoTexto}';"
-  },
+    "entradas": { 
+        "ID do Elemento (ex: paragrafo1)": "idElemento", 
+        "Novo Texto (ex: Texto atualizado ou Olá, ${nome}!)": "novoTexto" 
+    },
+    "codigo": "document.getElementById($vri{idElemento}).innerText = eval(`$vri{novoTexto}`);"
+},
   {
     "nome": "Alterar Cor de Fundo",
     "cor": "#FFC107",

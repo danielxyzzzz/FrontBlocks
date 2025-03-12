@@ -1,5 +1,32 @@
 [
      {
+  "nome": "Criar Header",
+  "cor": "#009dff",
+  "entradas": {
+    "Id do Header": "idDoHeader",
+    "Cor de Fundo": "corDeFundo"
+  },
+  "codigo": "let header = document.createElement('header');\nheader.id = '$vri{idDoHeader}';\nheader.style.backgroundColor = '$vri{corDeFundo}';\ndocument.body.prepend(header);"
+     },
+     {
+  "nome": "Criar Footer",
+  "cor": "#009dff",
+  "entradas": {
+    "Id do Footer": "idDoFooter",
+    "Cor de Fundo": "corDeFundo"
+  },
+  "codigo": "let footer = document.createElement('footer');\nfooter.id = '$vri{idDoFooter}';\nfooter.style.backgroundColor = '$vri{corDeFundo}';\ndocument.body.appendChild(footer);"
+     },
+     {
+  "nome": "Criar Div",
+  "cor": "#009dff",
+  "entradas": {
+    "Id da Div": "idDaDiv",
+    "Cor de Fundo": "corDeFundo"
+  },
+  "codigo": "let div = document.createElement('div');\ndiv.id = '$vri{idDaDiv}';\ndiv.style.backgroundColor = '$vri{corDeFundo}';\ndocument.body.appendChild(div);"
+     },
+     {
     "nome": "Função",
     "cor": "#4CAF50",
     "entradas": {

@@ -75,6 +75,15 @@
   },
   "codigo": "function eventoClick(id, codigo) {\n  const botao = document.getElementById(id);\n  if (botao) {\n    botao.addEventListener('click', function() {\n      eval(codigo);\n    });\n  }\n}\n\nlet idEpm = '$vri{idEpm}';\nlet codigoClick = '$vri{codigoClick}';\neventoClick(idEpm, codigoClick);"
 },
+  {
+  "nome": "Alterar Border-Radius",
+  "cor": "#FFC107",
+  "entradas": { 
+    "ID do Elemento (ex: caixa1)": "idElemento", 
+    "Border-Radius (ex: 10px)": "borderRadius" 
+  },
+  "codigo": "document.getElementById('$vri{idElemento}').style.borderRadius = '$vri{borderRadius}';"
+  },
 {
   "nome": "Fazer Requisição HTTP",
   "cor": "#673AB7",
